@@ -1,0 +1,46 @@
+{
+    "name": "jhasheng/purple",
+    "type": "library",
+    "description": "laravel 5 profiler",
+    "keywords": [
+        "jhasheng",
+        "purple"
+    ],
+    "homepage": "https://github.com/jhasheng/purple",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jhasheng",
+            "email": "jhasheng@hotmail.com",
+            "homepage": "http://www.jiajunjun.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.1",
+        "php" : "~5.5|~7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jhasheng\\Purple\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jhasheng\\Purple\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

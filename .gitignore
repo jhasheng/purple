@@ -12,3 +12,6 @@ storage/
 .env.php
 .env
 .env.example
+.editorconfig
+.styleci.yml
+composer.lock
