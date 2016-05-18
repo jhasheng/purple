@@ -6,7 +6,9 @@ use Illuminate\Foundation\Application;
 use Jhasheng\Purple\Collections\CollectionInterface;
 use Jhasheng\Purple\Collections\Request;
 use Jhasheng\Purple\Exceptions\InvalidCollectionException;
+use Jhasheng\Purple\Render\JavascriptRender;
 use Symfony\Component\HttpFoundation\Response;
+use Jhasheng\Purple\Request\Request as PurpleRequest;
 
 class PurpleHook
 {
@@ -47,7 +49,7 @@ class PurpleHook
     public function __construct(Application $app)
     {
         $this->app = $app;
-        
+
         foreach ($this->defaultCollections as $collection) {
             array_push($this->collections, $app->make($collection));
         }
@@ -87,8 +89,10 @@ class PurpleHook
         foreach ($this->collections as $collection) {
             $collection->after($this->app, $response);
         }
-        
+
         $this->endHook();
+        $render = new JavascriptRender($response);
+        $render->renderPurpleButton();
     }
 
 
@@ -136,14 +140,20 @@ class PurpleHook
         /**
          * @var $collection \Jhasheng\Purple\Collections\CollectionInterface
          */
-        
-        
+        $request        = new PurpleRequest();
         $collectionData = [];
         foreach ($this->collections as $collection) {
-            $name = $collection->getName();
+            $name                  = $collection->getName();
             $collectionData[$name] = $collection->formatData();
         }
-        dd($collectionData);
+
+        $request->hydra($collectionData);
+        /**
+         * @var $storage \Jhasheng\Purple\Storage\StorageInterface
+         */
+        $storage = $this->app['purple.storage'];
+
+        $storage->store($request);
     }
 
 }

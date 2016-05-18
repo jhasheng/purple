@@ -45,6 +45,12 @@ abstract class AbstractCollection implements CollectionInterface
     protected $badge = 0;
 
     /**
+     * 公共信息
+     * @var array
+     */
+    protected $global = [];
+
+    /**
      * 注册收集器
      * @param Application $app
      */
@@ -100,8 +106,9 @@ abstract class AbstractCollection implements CollectionInterface
     public function formatData()
     {
         return [
-            'data' => $this->data[$this->name],
-            'badge' => $this->badge
+            'data'   => $this->data[$this->name],
+            'badge'  => $this->badge,
+            'global' => $this->global
         ];
     }
 }

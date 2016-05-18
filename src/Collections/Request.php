@@ -31,6 +31,12 @@ class Request extends AbstractCollection
             'method'  => $request->getMethod(),
             'uri'     => $request->getRequestUri(),
             'status'  => $response->getStatusCode(),
+            'name'    => $this->name
+        ];
+
+        $this->global = [
+            'uri'    => $request->getRequestUri(),
+            'method' => $request->getMethod()
         ];
     }
 }

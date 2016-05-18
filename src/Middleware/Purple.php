@@ -10,21 +10,24 @@
 namespace Jhasheng\Purple\Middleware;
 
 use Closure;
-use Jhasheng\Purple\PurpleHook;
+use Illuminate\Foundation\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class Purple
 {
-    protected $hook;
+    protected $app;
 
-    public function __construct(PurpleHook $hook)
+    public function __construct(Application $app)
     {
-        $this->hook = $hook;
+        $this->app = $app;
     }
 
     public function handle(Request $request, Closure $next)
     {
-        $hook = $this->hook;
+        /**
+         * @var $hook \Jhasheng\Purple\PurpleHook
+         */
+        $hook = $this->app['purple.hook'];
         /**
          * 不针对内部请求及命令行模式
          */

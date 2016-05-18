@@ -9,25 +9,34 @@
 
 namespace Jhasheng\Purple\Adapter;
 
-
+use DB;
 use Illuminate\Database\Eloquent\Model;
-use Jhasheng\Purple\Storage\StorageInterface;
+use Jhasheng\Purple\Request\Request;
 
 class MySQL extends Model implements AdapterInterface
 {
+    protected $table = 'anbu';
 
-    public function store(StorageInterface $storage)
+    protected $fillable = ['uuid', 'uri', 'storage', 'time'];
+
+    public function store(Request $request)
     {
-        // TODO: Implement store() method.
+        try {
+//            DB::table('anbu')->insert($request->toArray());
+            self::create($request->toArray());
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
     }
 
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return DB::table('anbu')->find($id);
     }
 
     public function clear()
     {
-        // TODO: Implement clear() method.
+        DB::table('anbu')->truncate();
     }
 }

@@ -9,11 +9,11 @@
  */
 namespace Jhasheng\Purple\Adapter;
 
-use Jhasheng\Purple\Storage\StorageInterface;
+use Jhasheng\Purple\Request\Request;
 
 interface AdapterInterface
 {
-    public function store(StorageInterface $storage);
+    public function store(Request $storage);
     
     public function find($id);
     
