@@ -7,7 +7,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Request;
+namespace Purple\Request;
 
 
 class Request

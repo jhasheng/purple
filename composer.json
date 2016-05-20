@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jhasheng\\Purple\\": "src"
+            "Purple\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jhasheng\\Purple\\": "tests"
+            "Purple\\": "tests"
         }
     },
     "scripts": {

@@ -7,7 +7,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Middleware;
+namespace Purple\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Application;
@@ -25,7 +25,7 @@ class Purple
     public function handle(Request $request, Closure $next)
     {
         /**
-         * @var $hook \Jhasheng\Purple\PurpleHook
+         * @var $hook \Purple\PurpleHook
          */
         $hook = $this->app['purple.hook'];
         /**

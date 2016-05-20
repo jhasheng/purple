@@ -1,10 +1,10 @@
 <?php
 
-namespace Jhasheng\Purple;
+namespace Purple;
 
 use Illuminate\Support\ServiceProvider;
-use Jhasheng\Purple\Adapter\MySQL;
-use Jhasheng\Purple\Storage\Storage;
+use Purple\Adapter\MySQL;
+use Purple\Storage\Storage;
 
 class PurpleServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,7 @@ class PurpleServiceProvider extends ServiceProvider
         });
         $app->singleton('purple.hook', PurpleHook::class);
         /**
-         * @var $purple \Jhasheng\Purple\PurpleHook
+         * @var $purple \Purple\PurpleHook
          */
         $purple = $app->make('purple.hook');
         $purple->registerHook();
@@ -66,7 +66,7 @@ class PurpleServiceProvider extends ServiceProvider
          * @var $router \Illuminate\Routing\Router
          */
         $router = $this->app['router'];
-        $router->get('/{id}/{key}', ['prefix' => $prefix, 'uses' => 'Jhasheng\Purple\Controller\PurpleController@index']);
+        $router->get('/{id}/{key}', ['prefix' => $prefix, 'uses' => 'Purple\Controller\PurpleController@index']);
     }
 
     /**

@@ -7,7 +7,7 @@
  * Time: 14:15
  * Email: jhasheng@hotmail.com
  */
-namespace Jhasheng\Purple\Exceptions;
+namespace Purple\Exceptions;
 
 class InvalidCollectionException extends \RuntimeException
 {

@@ -7,9 +7,9 @@
  * Time: 17:20
  * Email: jhasheng@hotmail.com
  */
-namespace Jhasheng\Purple\Adapter;
+namespace Purple\Adapter;
 
-use Jhasheng\Purple\Request\Request;
+use Purple\Request\Request;
 
 interface AdapterInterface
 {

@@ -7,7 +7,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Collections;
+namespace Purple\Collections;
 
 
 use Illuminate\Foundation\Application;

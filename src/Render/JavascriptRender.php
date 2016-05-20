@@ -8,7 +8,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Render;
+namespace Purple\Render;
 
 use Symfony\Component\HttpFoundation\Response;
 

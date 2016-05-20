@@ -7,7 +7,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Controller;
+namespace Purple\Controller;
 
 
 use App\Http\Controllers\Controller;
@@ -26,7 +26,7 @@ class PurpleController extends Controller
     {
         $app = $this->app;
         /**
-         * @var $storage \Jhasheng\Purple\Storage\StorageInterface
+         * @var $storage \Purple\Storage\StorageInterface
          */
         $storage = $app['purple.storage'];
 

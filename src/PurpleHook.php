@@ -1,14 +1,14 @@
 <?php
 
-namespace Jhasheng\Purple;
+namespace Purple;
 
 use Illuminate\Foundation\Application;
-use Jhasheng\Purple\Collections\CollectionInterface;
-use Jhasheng\Purple\Collections\Request;
-use Jhasheng\Purple\Exceptions\InvalidCollectionException;
-use Jhasheng\Purple\Render\JavascriptRender;
+use Purple\Collections\CollectionInterface;
+use Purple\Collections\Request;
+use Purple\Exceptions\InvalidCollectionException;
+use Purple\Render\JavascriptRender;
 use Symfony\Component\HttpFoundation\Response;
-use Jhasheng\Purple\Request\Request as PurpleRequest;
+use Purple\Request\Request as PurpleRequest;
 
 class PurpleHook
 {

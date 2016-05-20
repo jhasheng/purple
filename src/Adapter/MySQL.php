@@ -7,11 +7,11 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Jhasheng\Purple\Adapter;
+namespace Purple\Adapter;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Jhasheng\Purple\Request\Request;
+use Purple\Request\Request;
 
 class MySQL extends Model implements AdapterInterface
 {
