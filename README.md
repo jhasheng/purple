@@ -13,17 +13,17 @@ composer require jhasheng/purple
 
 - 添加以下 `ServiceProvider` 到 `config/app.php` 
 ``` php
-\Jhasheng\Purple\PurpleServiceProvider::class,
+\Purple\PurpleServiceProvider::class,
 ```
 
 - 添加中间件到 `Kernel.php`
 ``` php
-\Jhasheng\Purple\Middleware\Purple.php,
+\Purple\Middleware\Purple.php,
 ```
 
 - 发布资源文件 参数 `force` 可选，意为强制覆盖已经存在的文件，第二次运行时使用
 ``` bash
-php artisan vendor:publish --provider='\Jhasheng\Purple\PurpleServiceProvider' --force
+php artisan vendor:publish --provider='\Purple\PurpleServiceProvider' --force
 ```
 
 
