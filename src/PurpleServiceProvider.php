@@ -9,6 +9,7 @@ use Purple\Storage\Storage;
 class PurpleServiceProvider extends ServiceProvider
 {
     protected $defer = false;
+
     /**
      * Perform post-registration booting of services.
      *
@@ -17,7 +18,9 @@ class PurpleServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/purple.php', 'purple');
-        
+
+        $this->loadViewsFrom(__DIR__ . '/Resources', 'purple');
+
         $this->publishAssetsFiles();
 
         $this->registerRouter();
@@ -33,7 +36,7 @@ class PurpleServiceProvider extends ServiceProvider
         $app = $this->app;
         $app->singleton('purple.adapter', MySQL::class);
 
-        $app->singleton('purple.storage', function($app) {
+        $app->singleton('purple.storage', function ($app) {
             return new Storage($app['purple.adapter']);
         });
         $app->singleton('purple.hook', PurpleHook::class);
@@ -49,7 +52,7 @@ class PurpleServiceProvider extends ServiceProvider
      */
     protected function registerCommand()
     {
-        
+
     }
 
     /**
@@ -76,10 +79,20 @@ class PurpleServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/purple.php' => config_path('purple.php')
-        ], 'config');
+        ], 'purple.config');
 
         $this->publishes([
             __DIR__ . '/../assets' => public_path('purple')
-        ]);
+        ], 'purple.assets');
+
+        $this->publishes([
+            __DIR__ . '/../migrations' => database_path('migrations')
+        ], 'purple.sql');
+
+        $this->publishes([
+            __DIR__ . '/Resources' => resource_path('views/purple')
+        ], 'purple.view');
+
     }
+
 }

@@ -138,7 +138,7 @@ class PurpleHook
     protected function endHook()
     {
         /**
-         * @var $collection \Jhasheng\Purple\Collections\CollectionInterface
+         * @var $collection \Purple\Collections\CollectionInterface
          */
         $request        = new PurpleRequest();
         $collectionData = [];
@@ -149,10 +149,9 @@ class PurpleHook
 
         $request->hydra($collectionData);
         /**
-         * @var $storage \Jhasheng\Purple\Storage\StorageInterface
+         * @var $storage \Purple\Storage\StorageInterface
          */
         $storage = $this->app['purple.storage'];
-
         $storage->store($request);
     }
 
