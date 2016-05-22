@@ -2,11 +2,11 @@
 
 ## 由来
 
-> 无类似 `symfony` 中 `debug` 工具
-> `laravel-debugbar` 界面过于丑陋，处女座的我表示不能忍
-> [daylerees/anbu](https://github.com/daylerees/anbu) ，但并不支持 `laravel 5.2` , mark 一下
-> [itsgoingd/clockwork](https://github.com/itsgoingd/clockwork) , 支持 `laravel 5.2` 但是没有界面，需要结合 Chrome 插件来使用
-> 还是不合我意，于是有了将两者合一的念头
+- 无类似 `symfony` 中 `debug` 工具
+- `laravel-debugbar` 界面过于丑陋，处女座的我表示不能忍
+- [daylerees/anbu](https://github.com/daylerees/anbu) ，但并不支持 `laravel 5.2` , mark 一下
+- [itsgoingd/clockwork](https://github.com/itsgoingd/clockwork) , 支持 `laravel 5.2` 但是没有界面，需要结合 Chrome 插件来使用
+- 还是不合我意，于是有了将两者合一的念头
 
 ## 安装
 
