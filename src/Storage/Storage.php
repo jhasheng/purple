@@ -1,9 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: krasen
- * Date: 5/21/2016
- * Time: 2:10 PM
+ * User: Krasen
+ * Date: 16/5/17
+ * Time: 16:40
+ * Email: jhasheng@hotmail.com
  */
 
 namespace Purple\Storage;
@@ -11,35 +12,16 @@ namespace Purple\Storage;
 
 use Purple\Request\Request;
 
-class Storage implements StorageInterface
+class Storage extends AbstractStorage
 {
 
-    /**
-     * 存储数据
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
-    {
-        // TODO: Implement store() method.
-    }
-
-    /**
-     * 获取数据
-     * @param $id
-     * @return mixed
-     */
     public function retrieve($id)
     {
-        // TODO: Implement find() method.
+        return $this->adapter->find($id);
     }
 
-    /**
-     * 清空数据
-     * @return mixed
-     */
-    public function clear()
+    public function store(Request $request)
     {
-        // TODO: Implement clear() method.
+        $this->adapter->store($request);
     }
 }
