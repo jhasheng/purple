@@ -98,9 +98,9 @@ abstract class AbstractCollection implements CollectionInterface
      * 获取收集器收集到的信息数量
      * @return int
      */
-    public function getBadge()
+    public function calcBadge()
     {
-        return count($this->data[$this->name]);
+        $this->badge = count($this->data[$this->name]);
     }
 
     public function formatData()

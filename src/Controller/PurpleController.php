@@ -22,7 +22,7 @@ class PurpleController extends Controller
         $this->app = $application;
     }
 
-    public function index($id = null, $name)
+    public function index($id, $name)
     {
         $app = $this->app;
         /**
@@ -32,15 +32,18 @@ class PurpleController extends Controller
 
         $result = $storage->retrieve($id);
 
-        $content = unserialize($result->storage);
+        $content = unserialize($result->content);
 
         foreach ($content['child'] as $key => $val) {
             if ($key === $name) {
-                $content['current'] = $val;
+                $content['current'] = view('purple::modules.' . $name, $val)->render();
                 break;
             }
         }
+
         $content['version'] = Application::VERSION;
-        return view('purple.index', $content);
+        $content['created_at'] = $result->created_at;
+        dd($content);
+        return view('purple::index', $content);
     }
 }

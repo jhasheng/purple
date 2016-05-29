@@ -21,11 +21,9 @@ class JavascriptRender
      */
     protected $response;
 
-    protected $headStyle = [
-    ];
+    protected $headStyle = [];
 
-    protected $footerScript = [
-    ];
+    protected $footerScript = [];
 
     public function __construct(Response $response)
     {
@@ -54,7 +52,7 @@ class JavascriptRender
         if (false !== $this->getHeadPos()) {
             $styleHtml = "";
             foreach ($this->headStyle as $style) {
-                $styleHtml .= sprintf("<link href='%s' rel='stylesheet'/>", $style) . "\n";
+                $styleHtml .= sprintf('<link href="%s" rel="stylesheet" />', $style) . "\n";
             }
             $content   = substr($this->content, 0, $this->getHeadPos()) . $styleHtml . substr($this->content, $this->getHeadPos());
             $this->response->setContent($content);

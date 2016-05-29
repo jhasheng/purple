@@ -26,17 +26,22 @@ class Request extends AbstractCollection
          */
         $request = $app['request'];
 
-        $this->data['request'] = [
+        array_push($this->data[$this->name], [
             'headers' => $request->headers->all(),
             'method'  => $request->getMethod(),
             'uri'     => $request->getRequestUri(),
             'status'  => $response->getStatusCode(),
-            'name'    => $this->name
-        ];
+            'server'  => $request->server(),
+            'data'    => $request->all()
+        ]);
 
         $this->global = [
-            'uri'    => $request->getRequestUri(),
-            'method' => $request->getMethod()
+            'uri'     => $request->getRequestUri(),
+            'method'  => $request->getMethod(),
+            'time'    => microtime(true) - LARAVEL_START,
+            'version' => Application::VERSION
         ];
+
+        $this->calcBadge();
     }
 }

@@ -4,9 +4,11 @@ namespace Purple;
 
 use Illuminate\Foundation\Application;
 use Purple\Collections\CollectionInterface;
+use Purple\Collections\Database;
+use Purple\Collections\Event;
 use Purple\Collections\Request;
+use Purple\Collections\Route;
 use Purple\Exceptions\InvalidCollectionException;
-use Purple\Render\JavascriptRender;
 use Symfony\Component\HttpFoundation\Response;
 use Purple\Request\Request as PurpleRequest;
 
@@ -34,6 +36,9 @@ class PurpleHook
      */
     protected $defaultCollections = [
         Request::class,
+        Event::class,
+        Database::class,
+        Route::class,
     ];
 
     /**
@@ -91,18 +96,20 @@ class PurpleHook
         }
 
         $this->endHook();
-        $render = new JavascriptRender($response);
-        $render->renderPurpleButton();
+
+        if (!$this->isAjax()) {
+            $content = $response->getContent();
+
+            $button = \View::make('purple::button')->render();
+            $response->setContent($content . $button);
+//            $render = new JavascriptRender($response);
+//            $render->renderPurpleButton();
+        }
     }
 
-
-    /**
-     * 是否为异步请求
-     * @return bool
-     */
-    public function isAjax()
+    public function setPrefix($prefix)
     {
-        return $this->app['request']->isXmlHttpRequest();
+        $this->prefix = $prefix;
     }
 
     /**
@@ -127,9 +134,19 @@ class PurpleHook
      * 是否为内部请求
      * @return bool
      */
-    public function isInteractRequest()
+    public function isBuiltInRequest()
     {
         return $this->prefix === $this->app['request']->segment(1);
+    }
+
+
+    /**
+     * 是否为异步请求
+     * @return bool
+     */
+    protected function isAjax()
+    {
+        return $this->app['request']->isXmlHttpRequest();
     }
 
     /**
@@ -147,6 +164,7 @@ class PurpleHook
             $collectionData[$name] = $collection->formatData();
         }
 
+        dd($collectionData);
         $request->hydra($collectionData);
         /**
          * @var $storage \Purple\Storage\StorageInterface

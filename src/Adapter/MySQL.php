@@ -15,9 +15,9 @@ use Purple\Request\Request;
 
 class MySQL extends Model implements AdapterInterface
 {
-    protected $table = 'anbu';
+    protected $table = 'purple';
 
-    protected $fillable = ['uuid', 'uri', 'storage', 'time'];
+    protected $fillable = ['uuid', 'uri', 'content', 'time'];
 
     public function store(Request $request)
     {
@@ -32,11 +32,11 @@ class MySQL extends Model implements AdapterInterface
 
     public function find($id)
     {
-        return DB::table('anbu')->find($id);
+        return DB::table('purple')->find($id);
     }
 
     public function clear()
     {
-        DB::table('anbu')->truncate();
+        DB::table('purple')->truncate();
     }
 }

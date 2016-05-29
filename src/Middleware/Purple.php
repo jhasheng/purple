@@ -31,7 +31,7 @@ class Purple
         /**
          * 不针对内部请求及命令行模式
          */
-        if(!$hook->isEnable() || $hook->isInteractRequest() || $hook->inConsole()) {
+        if(!$hook->isEnable() || $hook->isBuiltInRequest() || $hook->inConsole()) {
             return $next($request);
         }
         // 开始收集数据

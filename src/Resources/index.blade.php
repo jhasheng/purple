@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $current->getName() }} | Anbu2</title>
+    <title>{{ $current['name'] }} | Anbu2</title>
     <link rel="stylesheet" href="{{ url('/anbu/default.css') }}"/>
 </head>
 <body>
 <header>
     <img src="{{ url('/anbu/img/profiler_logo.png') }}" alt="Laravel" class="logo">
-    <?php $date = new Carbon\Carbon($storage->created_at); ?>
+    <?php $date = new Carbon\Carbon($created_at); ?>
     <span class="request"><span class="request-time"><span
-                    class="uri">{{ $uri }}</span> - {{ $date->format('d/m/y H:i:s') }} - <span class="duration">{{ number_format($storage->time, 3) }}
+                    class="uri">{{ $uri }}</span> - {{ $date->format('d/m/y H:i:s') }} - <span class="duration">
                 ms</span></span><a href="{{ url('/anbu') }}" class="request-reset" title="Back to latest."><i
                     class="fa fa-reply"></i></a></span>
     <span class="version">Laravel {{ $version }}</span>
@@ -19,8 +19,8 @@
     <ul>
         @foreach($menu as $item)
             <li>
-                <a href="{{ array_get($item, 'url') }}" @if(array_get($item, 'title') == $current->getName())class="active"@endif>
-                    @if(array_get($item, 'title') != $current->getName())
+                <a href="{{ array_get($item, 'url') }}" @if(array_get($item, 'title') == $current['name'])class="active"@endif>
+                    @if(array_get($item, 'title') != $current['name'])
                     <span class="label">
                         {{ array_get($item, 'title') }} <i class="arrow"></i>
                     </span>

@@ -47,7 +47,7 @@ class Request
         return [
             'uuid'    => $this->uuid,
             'time'    => microtime(true) - LARAVEL_START,
-            'storage' => $this->content,
+            'content' => $this->content,
             'uri'     => $this->uri
         ];
     }

@@ -44,6 +44,7 @@ class PurpleServiceProvider extends ServiceProvider
          * @var $purple \Purple\PurpleHook
          */
         $purple = $app->make('purple.hook');
+        $purple->setPrefix($app['config']->get('purple.prefix', '_purple'));
         $purple->registerHook();
     }
 
@@ -65,11 +66,12 @@ class PurpleServiceProvider extends ServiceProvider
          */
         $config = $this->app['config'];
         $prefix = $config->get('purple.prefix', '_purple');
+
         /**
          * @var $router \Illuminate\Routing\Router
          */
         $router = $this->app['router'];
-        $router->get('/{id}/{key}', ['prefix' => $prefix, 'uses' => 'Purple\Controller\PurpleController@index']);
+        $router->get('/{id}/{key}', ['prefix' => $prefix, 'as' => 'purple.index', 'uses' => 'Purple\Controller\PurpleController@index']);
     }
 
     /**
