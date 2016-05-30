@@ -17,7 +17,8 @@ class Storage extends AbstractStorage
 
     public function retrieve($id)
     {
-        return $this->adapter->find($id);
+        $result = $this->adapter->find($id);
+        return unserialize($result->content);
     }
 
     public function store(Request $request)

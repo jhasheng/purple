@@ -22,7 +22,7 @@ class PurpleController extends Controller
         $this->app = $application;
     }
 
-    public function index($id, $name)
+    public function index($id, $name = 'request')
     {
         $app = $this->app;
         /**
@@ -32,9 +32,11 @@ class PurpleController extends Controller
 
         $result = $storage->retrieve($id);
 
-        $content = unserialize($result->content);
+        $request = $this->app['purple.request'];
 
-        foreach ($content['child'] as $key => $val) {
+        $request->hydra($result);
+        
+        foreach ($result['content'] as $key => $val) {
             if ($key === $name) {
                 $content['current'] = view('purple::modules.' . $name, $val)->render();
                 break;
@@ -43,7 +45,7 @@ class PurpleController extends Controller
 
         $content['version'] = Application::VERSION;
         $content['created_at'] = $result->created_at;
-        dd($content);
+        $content['name'] = $name;
         return view('purple::index', $content);
     }
 }

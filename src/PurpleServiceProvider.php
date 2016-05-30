@@ -4,6 +4,7 @@ namespace Purple;
 
 use Illuminate\Support\ServiceProvider;
 use Purple\Adapter\MySQL;
+use Purple\Request\Request;
 use Purple\Storage\Storage;
 
 class PurpleServiceProvider extends ServiceProvider
@@ -40,6 +41,8 @@ class PurpleServiceProvider extends ServiceProvider
             return new Storage($app['purple.adapter']);
         });
         $app->singleton('purple.hook', PurpleHook::class);
+        
+        $app->singleton('purple.request', Request::class);
         /**
          * @var $purple \Purple\PurpleHook
          */

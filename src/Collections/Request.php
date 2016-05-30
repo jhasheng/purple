@@ -18,6 +18,8 @@ class Request extends AbstractCollection
 
     protected $name = 'request';
 
+    protected $icon = 'refresh';
+
     public function after(Application $app, Response $response)
     {
         /**

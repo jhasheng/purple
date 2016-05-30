@@ -10,6 +10,8 @@
 namespace Purple\Request;
 
 
+use Illuminate\Foundation\Application;
+
 class Request
 {
     protected $uuid;
@@ -20,26 +22,54 @@ class Request
 
     protected $content;
 
-    public function hydra(array $array)
+    protected $app;
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid)
     {
-        $result = $menu = $global = [];
-        foreach ($array as $key => $value) {
-            array_push($menu, ['name' => $key, 'badge' => $value['badge']]);
-            $global       = array_merge($global, $value['global']);
-            $result[$key] = $value['data'];
+        $this->uuid = $uuid;
+    }
+
+    /**
+     * @param mixed $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    }
+
+    /**
+     * @param mixed $uri
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = serialize($content);
+    }
+    
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
+    public function hydra(array $collections)
+    {
+        /**
+         * @var $hook \Purple\PurpleHook;
+         */
+        $hook = $this->app['purple.hook'];
+        foreach ($collections as $name => $data) {
+            $collection = $hook->getCollection($name);
+            dd($collection);
         }
-
-        $data = [
-            'menu'  => $menu,
-            'child' => $result,
-        ];
-
-        $data = array_merge($data, $global);
-
-        $this->uri     = $data['method'] . ' ' .$data['uri'];
-        $this->content = serialize($data);
-        $this->time    = time();
-        $this->uuid    = uniqid();
     }
 
     public function toArray()

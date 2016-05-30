@@ -10,7 +10,6 @@ use Purple\Collections\Request;
 use Purple\Collections\Route;
 use Purple\Exceptions\InvalidCollectionException;
 use Symfony\Component\HttpFoundation\Response;
-use Purple\Request\Request as PurpleRequest;
 
 class PurpleHook
 {
@@ -56,7 +55,9 @@ class PurpleHook
         $this->app = $app;
 
         foreach ($this->defaultCollections as $collection) {
-            array_push($this->collections, $app->make($collection));
+//            array_push($this->collections, $app->make($collection));
+            $collection = $app->make($collection);
+            $this->collections[$collection->getName()] = $collection;
         }
     }
 
@@ -73,6 +74,11 @@ class PurpleHook
             }
             $collection->register($this->app);
         }
+    }
+
+    public function getCollection($name)
+    {
+        return $this->collections[$name];
     }
 
     /**
@@ -157,20 +163,31 @@ class PurpleHook
         /**
          * @var $collection \Purple\Collections\CollectionInterface
          */
-        $request        = new PurpleRequest();
+        $request        = $this->app['purple.request'];
         $collectionData = [];
         foreach ($this->collections as $collection) {
             $name                  = $collection->getName();
             $collectionData[$name] = $collection->formatData();
         }
 
-        dd($collectionData);
-        $request->hydra($collectionData);
+        $request->setUuid(uniqid());
+        $request->setTime(microtime(true) - LARAVEL_START);
+        $request->setUri($this->getCurrentRequestUri());
+        $request->setContent($collectionData);
+
         /**
          * @var $storage \Purple\Storage\StorageInterface
          */
         $storage = $this->app['purple.storage'];
         $storage->store($request);
+    }
+
+    protected function getCurrentRequestUri()
+    {
+        $current = $this->app['router']->current();
+        $request = $this->app['request'];
+
+        return "{$request->getMethod()} {$current->getPath()}";
     }
 
 }

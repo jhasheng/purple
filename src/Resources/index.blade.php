@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $current['name'] }} | Anbu2</title>
+    <title>{{ $name }} <?php print_r($current); ?>| Anbu2</title>
     <link rel="stylesheet" href="{{ url('/anbu/default.css') }}"/>
 </head>
 <body>
@@ -19,8 +19,8 @@
     <ul>
         @foreach($menu as $item)
             <li>
-                <a href="{{ array_get($item, 'url') }}" @if(array_get($item, 'title') == $current['name'])class="active"@endif>
-                    @if(array_get($item, 'title') != $current['name'])
+                <a href="{{ array_get($item, 'url') }}" @if(array_get($item, 'title') == $name)class="active"@endif>
+                    @if(array_get($item, 'title') != $name)
                     <span class="label">
                         {{ array_get($item, 'title') }} <i class="arrow"></i>
                     </span>
@@ -37,7 +37,7 @@
     </ul>
 </nav>
 <div class="container">
-    <div class="content">{!! $child !!}</div>
+    <div class="content">{!! $current !!}</div>
 </div>
 </body>
 </html>

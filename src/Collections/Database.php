@@ -17,6 +17,8 @@ class Database extends AbstractCollection
 {
     protected $name = 'db';
 
+    protected $icon = 'database';
+
     public function before(Application $application)
     {
         parent::before($application);

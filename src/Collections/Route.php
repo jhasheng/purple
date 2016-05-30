@@ -16,6 +16,8 @@ class Route extends AbstractCollection
 {
     protected $name = 'route';
 
+    protected $icon = 'road';
+
     public function after(Application $app, Response $response)
     {
         /**
@@ -36,8 +38,7 @@ class Route extends AbstractCollection
         }
 
         $current = $router->current();
-
-        $this->data['current'] = [
+        $this->global = [
             'methods' => $current->getMethods(),
             'name'    => $current->getName(),
             'path'    => $current->getPath(),

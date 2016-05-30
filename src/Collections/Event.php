@@ -16,6 +16,8 @@ class Event extends AbstractCollection
 {
     protected $name = 'event';
 
+    protected $icon = 'exclamation-circle';
+
     public function before(Application $application)
     {
         parent::before($application);
