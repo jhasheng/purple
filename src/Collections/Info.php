@@ -21,7 +21,7 @@ class Info extends AbstractCollection
 
     public function after(Application $app, Response $response)
     {
-        parent::after($app, $response);
+//        parent::after($app, $response);
     }
 
     public function live()

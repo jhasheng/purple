@@ -110,12 +110,12 @@ class PurpleHook
             $collection->after($this->app, $response);
         }
 
-        $this->endHook();
+        $uuid = $this->endHook();
 
         if (!$this->isAjax()) {
             $content = $response->getContent();
 
-            $button = \View::make('purple::button')->render();
+            $button = view('purple::button', compact('uuid'))->render();
             $response->setContent($content . $button);
 //            $render = new JavascriptRender($response);
 //            $render->renderPurpleButton();
@@ -179,7 +179,8 @@ class PurpleHook
             $collectionData[$name] = $collection->formatData();
         }
 //dd($collectionData);
-        $request->setUuid(uniqid());
+        $uuid = uniqid();
+        $request->setUuid($uuid);
         $request->setTime(microtime(true) - LARAVEL_START);
         $request->setUri($this->getCurrentRequestUri());
         $request->setContent($collectionData);
@@ -189,6 +190,7 @@ class PurpleHook
          */
         $storage = $this->app['purple.storage'];
         $storage->store($request);
+        return $uuid;
     }
 
     protected function getCurrentRequestUri()

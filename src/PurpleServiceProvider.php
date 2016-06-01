@@ -74,7 +74,7 @@ class PurpleServiceProvider extends ServiceProvider
          * @var $router \Illuminate\Routing\Router
          */
         $router = $this->app['router'];
-        $router->get('/{id}/{key}', ['prefix' => $prefix, 'as' => 'purple.index', 'uses' => 'Purple\Controller\PurpleController@index']);
+        $router->get('/{id}/{key?}', ['prefix' => $prefix, 'as' => 'purple.index', 'uses' => 'Purple\Controller\PurpleController@index']);
     }
 
     /**

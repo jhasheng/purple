@@ -32,7 +32,7 @@ class MySQL extends Model implements AdapterInterface
 
     public function find($id)
     {
-        return DB::table('purple')->find($id);
+        return DB::table('purple')->where('uuid', $id)->first();
     }
 
     public function clear()
