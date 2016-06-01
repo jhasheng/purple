@@ -4,8 +4,10 @@ namespace Purple;
 
 use Illuminate\Foundation\Application;
 use Purple\Collections\CollectionInterface;
+use Purple\Collections\Dashboard;
 use Purple\Collections\Database;
 use Purple\Collections\Event;
+use Purple\Collections\Info;
 use Purple\Collections\Request;
 use Purple\Collections\Route;
 use Purple\Exceptions\InvalidCollectionException;
@@ -34,10 +36,12 @@ class PurpleHook
      * @var array
      */
     protected $defaultCollections = [
+        Dashboard::class,
         Request::class,
         Event::class,
         Database::class,
         Route::class,
+        Info::class,
     ];
 
     /**
@@ -56,7 +60,7 @@ class PurpleHook
 
         foreach ($this->defaultCollections as $collection) {
 //            array_push($this->collections, $app->make($collection));
-            $collection = $app->make($collection);
+            $collection                                = $app->make($collection);
             $this->collections[$collection->getName()] = $collection;
         }
     }
@@ -79,6 +83,11 @@ class PurpleHook
     public function getCollection($name)
     {
         return $this->collections[$name];
+    }
+
+    public function getCollections()
+    {
+        return $this->collections;
     }
 
     /**
@@ -169,7 +178,7 @@ class PurpleHook
             $name                  = $collection->getName();
             $collectionData[$name] = $collection->formatData();
         }
-
+//dd($collectionData);
         $request->setUuid(uniqid());
         $request->setTime(microtime(true) - LARAVEL_START);
         $request->setUri($this->getCurrentRequestUri());

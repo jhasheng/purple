@@ -28,4 +28,6 @@ interface CollectionInterface
     public function getName();
     
     public function formatData();
+    
+    public function getTemplate();
 }

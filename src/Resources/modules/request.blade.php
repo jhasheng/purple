@@ -1,6 +1,6 @@
 <h1>Request Information</h1>
 <h2>Request Data</h2>
-@if (isset($request) && count($request))
+@if (isset($request['data']) && count($request['data']))
 <table class="anbu-table">
     <thead>
         <tr>
@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($request as $key => $value)
+        @foreach($request['data'] as $key => $value)
         <tr>
             <td>{{ $key }}</td>
             <td>{{ str_limit($value) }}</td>
@@ -22,7 +22,7 @@
 @endif
 
 <h2>Request Headers</h2>
-@if (isset($requestHeaders) && count($requestHeaders))
+@if (isset($request['headers']) && count($request['headers']))
 <table class="anbu-table">
     <thead>
         <tr>
@@ -31,7 +31,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($requestHeaders as $key => $value)
+        @foreach($request['headers'] as $key => $value)
         <tr>
             <td>{{ $key }}</td>
             <td class="code">{{ str_limit($value[0]) }}</td>
@@ -44,7 +44,7 @@
 @endif
 
 <h2>Response Headers</h2>
-@if (isset($responseHeaders) && count($responseHeaders))
+@if (isset($request['response']) && count($request['response']))
 <table class="anbu-table">
     <thead>
         <tr>
@@ -53,7 +53,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($responseHeaders as $key => $value)
+        @foreach($request['response'] as $key => $value)
         <tr>
             <td>{{ $key }}</td>
             <td class="code">{{ str_limit($value[0]) }}</td>
@@ -66,7 +66,7 @@
 @endif
 
 <h2>Server Variables</h2>
-@if (isset($server) && count($server))
+@if (isset($request['server']) && count($request['server']))
 <table class="anbu-table">
     <thead>
         <tr>
@@ -75,7 +75,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($server as $key => $value)
+        @foreach($request['server'] as $key => $value)
         <tr>
             <td>{{ $key }}</td>
             <td class="code">{{ str_limit($value) }}</td>

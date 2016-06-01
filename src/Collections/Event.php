@@ -17,6 +17,8 @@ class Event extends AbstractCollection
     protected $name = 'event';
 
     protected $icon = 'exclamation-circle';
+    
+    protected $template = 'events';
 
     public function before(Application $application)
     {
@@ -36,7 +38,7 @@ class Event extends AbstractCollection
          */
         $event = $this->app['events'];
 
-        array_push($this->data[$this->name], [
+        array_push($this->data[$this->template], [
             'name' => $event->firing(),
             'time' => microtime(true) - LARAVEL_START
         ]);

@@ -18,6 +18,8 @@ class Database extends AbstractCollection
     protected $name = 'db';
 
     protected $icon = 'database';
+    
+    protected $template = 'query';
 
     public function before(Application $application)
     {
@@ -32,7 +34,7 @@ class Database extends AbstractCollection
         /**
          * @var $event \Illuminate\Database\Events\QueryExecuted
          */
-        array_push($this->data[$this->name], [
+        array_push($this->data[$this->template], [
             'query'      => $query->sql,
             'bindings'   => $query->bindings,
             'time'       => $query->time,

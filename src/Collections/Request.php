@@ -20,6 +20,8 @@ class Request extends AbstractCollection
 
     protected $icon = 'refresh';
 
+    protected $template = 'request';
+
     public function after(Application $app, Response $response)
     {
         /**
@@ -27,15 +29,15 @@ class Request extends AbstractCollection
          * @var $request \Symfony\Component\HttpFoundation\Request
          */
         $request = $app['request'];
-
-        array_push($this->data[$this->name], [
-            'headers' => $request->headers->all(),
-            'method'  => $request->getMethod(),
-            'uri'     => $request->getRequestUri(),
-            'status'  => $response->getStatusCode(),
-            'server'  => $request->server(),
-            'data'    => $request->all()
-        ]);
+        $this->data[$this->template] = [
+            'headers'  => $request->headers->all(),
+            'method'   => $request->getMethod(),
+            'uri'      => $request->getRequestUri(),
+            'status'   => $response->getStatusCode(),
+            'response' => $response->headers->all(),
+            'server'   => $request->server,
+            'data'     => $request->all()
+        ];
 
         $this->global = [
             'uri'     => $request->getRequestUri(),

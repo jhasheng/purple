@@ -31,6 +31,8 @@ abstract class AbstractCollection implements CollectionInterface
      * @var Application
      */
     protected $app;
+    
+    protected $template;
 
     /**
      * 结束收集的标记
@@ -73,7 +75,7 @@ abstract class AbstractCollection implements CollectionInterface
      */
     public function before(Application $application)
     {
-        $this->data[$this->name] = [];
+        $this->data[$this->template] = [];
     }
 
     /**
@@ -82,9 +84,33 @@ abstract class AbstractCollection implements CollectionInterface
      */
     public function getData()
     {
-        return $this->data[$this->name];
+        return $this->data;
+    }
+    
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+    
+    public function getGlobal()
+    {
+        return $this->global;
     }
 
+    public function setGlobal($global)
+    {
+        $this->global = $global;
+    }
+    
+    public function getBadge()
+    {
+        return $this->badge;
+    }
+    
+    public function setBadge($badge)
+    {
+        $this->badge = $badge;
+    }
     /**
      * 获取收集器名称
      * @return string
@@ -93,6 +119,11 @@ abstract class AbstractCollection implements CollectionInterface
     {
         return $this->name;
     }
+    
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 
     /**
      * 获取收集器收集到的信息数量
@@ -100,13 +131,13 @@ abstract class AbstractCollection implements CollectionInterface
      */
     public function calcBadge()
     {
-        $this->badge = count($this->data[$this->name]);
+        $this->badge = count($this->data[$this->template]);
     }
 
     public function formatData()
     {
         return [
-            'data'   => $this->data[$this->name],
+            'data'   => $this->data,
             'badge'  => $this->badge,
             'global' => $this->global
         ];

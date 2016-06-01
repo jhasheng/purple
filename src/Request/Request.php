@@ -66,10 +66,14 @@ class Request
          * @var $hook \Purple\PurpleHook;
          */
         $hook = $this->app['purple.hook'];
-        foreach ($collections as $name => $data) {
+        foreach ($collections as $name => &$data) {
             $collection = $hook->getCollection($name);
-            dd($collection);
+            $collection->setData($data['data']);
+            $collection->setGlobal($data['global']);
+            $collection->setBadge($data['badge']);
+            $data = $collection;
         }
+        unset($data);
     }
 
     public function toArray()

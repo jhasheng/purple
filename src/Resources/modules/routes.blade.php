@@ -9,9 +9,9 @@
     </thead>
     <tbody>
         <tr>
-            <td><span class="method-tag method-tag-{{ strtolower('a') }}"></span></td>
-            <td class="code"></td>
-            <td class="code"></td>
+            <td><span class="method-tag method-tag-{{ strtolower($current['methods'][0]) }}">{{ $current['methods'][0] }}</span></td>
+            <td class="code">{{ $current['path'] }}</td>
+            <td class="code">{{ $current['action'] }}</td>
         </tr>
     </tbody>
 </table>
@@ -30,12 +30,12 @@
         @foreach(array_reverse($routes) as $route)
         <tr>
             <td>
-            @foreach ($route[0] as $method)
+            @foreach ($route['methods'] as $method)
             <span class="method-tag method-tag-{{ strtolower($method) }}">{{ $method }}</span>
             @endforeach
             </td>
-            <td class="code">{!! $route[1] !!}</td>
-            <td class="code">{{ $route[2] }}</td>
+            <td class="code">{!! $route['path'] !!}</td>
+            <td class="code">{{ $route['action'] }}</td>
         </tr>
         @endforeach
     </tbody>

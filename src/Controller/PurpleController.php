@@ -9,9 +9,9 @@
 
 namespace Purple\Controller;
 
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
+use Purple\Collections\CollectionInterface;
 
 class PurpleController extends Controller
 {
@@ -29,23 +29,54 @@ class PurpleController extends Controller
          * @var $storage \Purple\Storage\StorageInterface
          */
         $storage = $app['purple.storage'];
-
         $result = $storage->retrieve($id);
 
         $request = $this->app['purple.request'];
-
         $request->hydra($result);
-        
-        foreach ($result['content'] as $key => $val) {
-            if ($key === $name) {
-                $content['current'] = view('purple::modules.' . $name, $val)->render();
-                break;
-            }
+
+        /**
+         * @var $hook \Purple\PurpleHook
+         */
+        $hook = $app['purple.hook'];
+        $current = $hook->getCollection($name);
+
+        $data = $this->buildViewData($result, $current);
+//        dd($data);
+        return view('purple::index', $data);
+    }
+
+    protected function buildViewData($result, CollectionInterface $collection)
+    {
+        $data = $this->getGlobalData();
+
+        $data['child'] = $this->renderCurrent($collection);
+        $data['current'] = $collection;
+        $data['storage'] = $result;
+
+        return $data;
+    }
+
+    protected function getGlobalData()
+    {
+        $global = [];
+        /**
+         * @var $hook \Purple\PurpleHook
+         */
+        $hook = $this->app['purple.hook'];
+        $collections = $hook->getCollections();
+
+        foreach ($collections as $collection) {
+            $global = array_merge($collection->getGlobal(), $global);
         }
 
-        $content['version'] = Application::VERSION;
-        $content['created_at'] = $result->created_at;
-        $content['name'] = $name;
-        return view('purple::index', $content);
+        $global['menu'] = [];
+        return $global;
+    }
+
+    protected function renderCurrent(CollectionInterface $collection)
+    {
+        $collection->live();
+//        dd($collection->getData());
+        return view("purple::modules.{$collection->getTemplate()}", $collection->getData())->render();
     }
 }

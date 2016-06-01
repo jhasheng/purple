@@ -17,6 +17,8 @@ class Route extends AbstractCollection
     protected $name = 'route';
 
     protected $icon = 'road';
+    
+    protected $template = 'routes';
 
     public function after(Application $app, Response $response)
     {
@@ -29,16 +31,17 @@ class Route extends AbstractCollection
          * @var $route \Illuminate\Routing\Route
          */
         foreach ($routes as $route) {
-            array_push($this->data[$this->name], [
+            array_push($this->data[$this->template], [
                 'methods' => $route->getMethods(),
                 'name'    => $route->getName(),
                 'path'    => $route->getPath(),
                 'action'  => $route->getActionName(),
             ]);
         }
-
+        
         $current = $router->current();
-        $this->global = [
+
+        $this->data['current'] = $this->global = [
             'methods' => $current->getMethods(),
             'name'    => $current->getName(),
             'path'    => $current->getPath(),
