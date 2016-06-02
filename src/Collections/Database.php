@@ -18,7 +18,7 @@ class Database extends AbstractCollection
     protected $name = 'db';
 
     protected $icon = 'database';
-    
+
     protected $template = 'query';
 
     public function before(Application $application)

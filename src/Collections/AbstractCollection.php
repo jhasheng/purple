@@ -31,7 +31,11 @@ abstract class AbstractCollection implements CollectionInterface
      * @var Application
      */
     protected $app;
-    
+
+    /**
+     * 模板名称
+     * @var string
+     */
     protected $template;
 
     /**
@@ -52,6 +56,13 @@ abstract class AbstractCollection implements CollectionInterface
      */
     protected $global = [];
 
+    /**
+     * icon名称
+     * @var string
+     */
+    protected $icon;
+    
+    protected $url;
     /**
      * 注册收集器
      * @param Application $app
@@ -125,6 +136,11 @@ abstract class AbstractCollection implements CollectionInterface
         return $this->template;
     }
 
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
     /**
      * 获取收集器收集到的信息数量
      * @return int
@@ -132,6 +148,20 @@ abstract class AbstractCollection implements CollectionInterface
     public function calcBadge()
     {
         $this->badge = count($this->data[$this->template]);
+    }
+
+    public function getMenu()
+    {
+        /**
+         * @var $current \Illuminate\Routing\Route
+         */
+        $current = $this->app['router']->current();
+        return [
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
+            'badge' => $this->getBadge(),
+            'url' => route('purple.index', ['id' => $current->getParameter('id'), 'key' => $this->getName()])
+        ];
     }
 
     public function formatData()

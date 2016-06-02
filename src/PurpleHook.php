@@ -59,7 +59,6 @@ class PurpleHook
         $this->app = $app;
 
         foreach ($this->defaultCollections as $collection) {
-//            array_push($this->collections, $app->make($collection));
             $collection                                = $app->make($collection);
             $this->collections[$collection->getName()] = $collection;
         }

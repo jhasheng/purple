@@ -19,7 +19,7 @@ class Route extends AbstractCollection
     protected $icon = 'road';
     
     protected $template = 'routes';
-
+    
     public function after(Application $app, Response $response)
     {
         /**

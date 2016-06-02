@@ -59,6 +59,7 @@ class PurpleController extends Controller
     protected function getGlobalData()
     {
         $global = [];
+        $menu = [];
         /**
          * @var $hook \Purple\PurpleHook
          */
@@ -67,9 +68,10 @@ class PurpleController extends Controller
 
         foreach ($collections as $collection) {
             $global = array_merge($collection->getGlobal(), $global);
+            array_push($menu, $collection->getMenu());
         }
 
-        $global['menu'] = [];
+        $global['menus'] = $menu;
         return $global;
     }
 

@@ -22,11 +22,10 @@ class Event extends AbstractCollection
 
     public function before(Application $application)
     {
-        parent::before($application);
-
         /**
          * @var $event \Illuminate\Events\Dispatcher
          */
+        parent::before($application);
         $event = $application['events'];
         $event->listen('*', [$this, 'eventFired']);
     }

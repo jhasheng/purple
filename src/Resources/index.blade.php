@@ -17,22 +17,22 @@
 </header>
 <nav>
     <ul>
-        @foreach($menu as $item)
-            <li>
-                <a href="{{ array_get($item, 'url') }}" @if(array_get($item, 'title') == $name)class="active"@endif>
-                    @if(array_get($item, 'title') != $name)
-                    <span class="label">
-                        {{ array_get($item, 'title') }} <i class="arrow"></i>
-                    </span>
-                    @endif
-                    <i class="fa fa-{{ array_get($item, 'icon') }}"></i>
-                    @if (array_get($item, 'badge') > 0)
-                    <span class="badge">
-                        <i class="badge-inner">{{ array_get($item, 'badge') > 9 ? '+' : array_get($item, 'badge')  }}</i>
-                    </span>
-                    @endif
-                </a>
-            </li>
+        @foreach($menus as $item)
+        <li>
+            <a href="{{ $item['url'] }}" @if(array_get($item, 'name') == $name)class="active"@endif>
+                @if(array_get($item, 'name') != $name)
+                <span class="label">
+                    {{ array_get($item, 'name') }} <i class="arrow"></i>
+                </span>
+                @endif
+                <i class="fa fa-{{ array_get($item, 'icon') }}"></i>
+                @if (array_get($item, 'badge') > 0)
+                <span class="badge">
+                    <i class="badge-inner">{{ array_get($item, 'badge') > 9 ? '+' : array_get($item, 'badge')  }}</i>
+                </span>
+                @endif
+            </a>
+        </li>
         @endforeach
     </ul>
 </nav>
