@@ -18,7 +18,8 @@ class FileStorage implements StorageInterface
     public function retrieve($token)
     {
         if ($token && file_exists($file = $this->getFileName($token))) {
-            return unserialize(file_get_contents($file));
+            $content = unserialize(file_get_contents($file));
+            return unserialize($content['content']);
         }
     }
 

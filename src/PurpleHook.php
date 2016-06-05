@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PurpleHook
 {
+
+    const VERSION = '1.0.3';
     /**
      * 当前应用实例
      * @var Application
