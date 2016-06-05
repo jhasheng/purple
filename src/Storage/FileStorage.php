@@ -9,6 +9,7 @@
 namespace Purple\Storage;
 
 
+use Purple\Exceptions\InvalidTokenException;
 use Purple\Request\Request;
 
 class FileStorage implements StorageInterface
@@ -43,12 +44,15 @@ class FileStorage implements StorageInterface
      * 获取指定数据
      * @param $token
      * @return array
+     * @exception InvalidTokenException
      */
     public function retrieve($token)
     {
         if ($token && file_exists($file = $this->getFileName($token))) {
             $content = unserialize(file_get_contents($file));
             return unserialize($content['content']);
+        } else {
+            throw new InvalidTokenException;
         }
     }
 
