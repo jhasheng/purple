@@ -7,4 +7,13 @@
  * Email: jhasheng@hotmail.com
  */
 
-return [];
+return [
+    // 路由前缀
+    'prefix'  => '_purple',
+
+    // 表名/redis key名
+    'table'   => 'purple',
+
+    // 存储方式
+    'storage' => 'mysql'
+];

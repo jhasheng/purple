@@ -16,4 +16,6 @@ interface StorageInterface
     public function retrieve($id);
 
     public function store(Request $request);
+
+    public function purge();
 }

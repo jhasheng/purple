@@ -3,13 +3,13 @@
 namespace Purple;
 
 use Illuminate\Foundation\Application;
-use Purple\Collections\CollectionInterface;
-use Purple\Collections\Dashboard;
-use Purple\Collections\Database;
-use Purple\Collections\Event;
-use Purple\Collections\Info;
-use Purple\Collections\Request;
-use Purple\Collections\Route;
+use Purple\Collectors\CollectionInterface;
+use Purple\Collectors\Dashboard;
+use Purple\Collectors\Database;
+use Purple\Collectors\Event;
+use Purple\Collectors\Info;
+use Purple\Collectors\Request;
+use Purple\Collectors\Route;
 use Purple\Exceptions\InvalidCollectionException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -169,7 +169,7 @@ class PurpleHook
     protected function endHook()
     {
         /**
-         * @var $collection \Purple\Collections\CollectionInterface
+         * @var $collection \Purple\Collectors\CollectionInterface
          */
         $request        = $this->app['purple.request'];
         $collectionData = [];

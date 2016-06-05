@@ -6,7 +6,7 @@
  * Time: 9:57 PM
  */
 
-namespace Purple\Collections;
+namespace Purple\Collectors;
 
 
 use Illuminate\Foundation\Application;

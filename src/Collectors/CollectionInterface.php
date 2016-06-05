@@ -8,7 +8,7 @@
  * Email: jhasheng@hotmail.com
  */
 
-namespace Purple\Collections;
+namespace Purple\Collectors;
 
 use Illuminate\Foundation\Application;
 use Symfony\Component\HttpFoundation\Response;

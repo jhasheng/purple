@@ -30,6 +30,11 @@ class Request
     {
         $this->uuid = $uuid;
     }
+    
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
 
     /**
      * @param mixed $time
