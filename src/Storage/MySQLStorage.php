@@ -24,7 +24,7 @@ class MySQLStorage extends Model implements StorageInterface
 
     public function retrieve($id)
     {
-        return unserialize(DB::table('purple')->where('uuid', $id)->value('content'));
+        return unserialize(DB::table('purple')->where('uuid', $id)->pluck('content'));
     }
 
     public function store(Request $request)

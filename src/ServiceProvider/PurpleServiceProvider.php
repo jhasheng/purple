@@ -1,9 +1,13 @@
 <?php
 
-namespace Purple;
+namespace Purple\ServiceProvider;
 
 use Illuminate\Support\ServiceProvider;
+use Purple\Command\PurpleCommand;
+use Purple\PurpleHook;
 use Purple\Request\Request;
+use Purple\Storage\FileStorage;
+use Purple\Storage\MySQLStorage;
 use Purple\Storage\RedisStorage;
 
 class PurpleServiceProvider extends ServiceProvider
@@ -17,13 +21,15 @@ class PurpleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/purple.php', 'purple');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/purple.php', 'purple');
 
-        $this->loadViewsFrom(__DIR__ . '/Resources', 'purple');
+        $this->loadViewsFrom(__DIR__ . '/../Resources', 'purple');
 
         $this->publishAssetsFiles();
 
         $this->registerRouter();
+
+        $this->registerCommand();
     }
 
     /**
@@ -35,8 +41,14 @@ class PurpleServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-        $app->singleton('purple.storage', function($app) {
-            $storage = new RedisStorage();
+        $config = $app['config'];
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $storage = $config->get('purple.storage', 'file');
+
+        $app->singleton('purple.storage', function ($app) use ($storage) {
+            $storage = $this->getStorage($storage);
             $storage->setApplication($app);
             return $storage;
         });
@@ -45,8 +57,9 @@ class PurpleServiceProvider extends ServiceProvider
         $app->singleton('purple.request', Request::class);
         /** @var $purple \Purple\PurpleHook */
         $purple = $app->make('purple.hook');
-        $purple->setPrefix($app['config']->get('purple.prefix', '_purple'));
+        $purple->setPrefix($config->get('purple.prefix', '_purple'));
         $purple->registerHook();
+
     }
 
     /**
@@ -54,7 +67,11 @@ class PurpleServiceProvider extends ServiceProvider
      */
     protected function registerCommand()
     {
+        $this->app['command.purple.clear'] = $this->app->share(function(){
+            return new PurpleCommand($this->app['purple.storage']);
+        });
 
+        $this->commands('command.purple.clear');
     }
 
     /**
@@ -81,17 +98,33 @@ class PurpleServiceProvider extends ServiceProvider
     protected function publishAssetsFiles()
     {
         $this->publishes([
-            __DIR__ . '/../config/purple.php' => config_path('purple.php')
+            __DIR__ . '/../../config/purple.php' => config_path('purple.php')
         ], 'purple.config');
 
         $this->publishes([
-            __DIR__ . '/../assets' => public_path('purple')
+            __DIR__ . '/../../assets' => public_path('purple')
         ], 'purple.assets');
 
         $this->publishes([
-            __DIR__ . '/../migrations' => database_path('migrations')
+            __DIR__ . '/../../migrations' => database_path('migrations')
         ], 'purple.sql');
 
     }
 
+    protected function getStorage($type)
+    {
+        switch ($type) {
+            case 'file':
+                return new FileStorage();
+
+            case 'redis':
+                return new RedisStorage();
+
+            case 'mysql':
+                return new MySQLStorage();
+
+            default:
+                return new FileStorage();
+        }
+    }
 }

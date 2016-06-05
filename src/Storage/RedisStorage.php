@@ -48,6 +48,6 @@ class RedisStorage implements StorageInterface
         $config = $this->app['config'];
         $table = $config->get('purple.table', 'purple');
 
-        Cache::store('redis')->del($table);
+        Cache::store('redis')->connection()->del($table);
     }
 }
