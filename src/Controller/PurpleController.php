@@ -41,7 +41,7 @@ class PurpleController extends Controller
         $current = $hook->getCollection($name);
 
         $data = $this->buildViewData($result, $current);
-//        dd($data);
+
         return view('purple::index', $data);
     }
 
@@ -78,7 +78,7 @@ class PurpleController extends Controller
     protected function renderCurrent(CollectionInterface $collection)
     {
         $collection->live();
-//        dd($collection->getData());
+
         return view("purple::modules.{$collection->getTemplate()}", $collection->getData())->render();
     }
 }

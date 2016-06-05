@@ -10,13 +10,13 @@ use Purple\Collectors\Event;
 use Purple\Collectors\Info;
 use Purple\Collectors\Request;
 use Purple\Collectors\Route;
-use Purple\Exceptions\InvalidCollectionException;
+use Purple\Exceptions\InvalidCollectorException;
 use Symfony\Component\HttpFoundation\Response;
 
 class PurpleHook
 {
 
-    const VERSION = '1.0.3';
+    const VERSION = '1.0.4-dev';
     /**
      * 当前应用实例
      * @var Application
@@ -74,7 +74,7 @@ class PurpleHook
         foreach ($this->collections as $collection) {
             // 所有分析器必需实现 CollectionInterface
             if (!($collection instanceof CollectionInterface)) {
-                throw new InvalidCollectionException;
+                throw new InvalidCollectorException;
                 break;
             }
             $collection->register($this->app);
@@ -118,8 +118,6 @@ class PurpleHook
 
             $button = view('purple::button', compact('uuid'))->render();
             $response->setContent($content . $button);
-//            $render = new JavascriptRender($response);
-//            $render->renderPurpleButton();
         }
     }
 
@@ -179,7 +177,7 @@ class PurpleHook
             $name                  = $collection->getName();
             $collectionData[$name] = $collection->formatData();
         }
-//dd($collectionData);
+
         $uuid = uniqid();
         $request->setUuid($uuid);
         $request->setTime(microtime(true) - LARAVEL_START);

@@ -9,7 +9,7 @@
  */
 namespace Purple\Exceptions;
 
-class InvalidCollectionException extends \RuntimeException
+class InvalidStorageException extends \RuntimeException
 {
-    protected $message = 'The collection must be implement CollectionInterface';
+    protected $message = 'this storage not support yet!';
 }

@@ -4,6 +4,7 @@ namespace Purple\ServiceProvider;
 
 use Illuminate\Support\ServiceProvider;
 use Purple\Command\PurpleCommand;
+use Purple\Exceptions\InvalidStorageException;
 use Purple\PurpleHook;
 use Purple\Request\Request;
 use Purple\Storage\FileStorage;
@@ -113,18 +114,12 @@ class PurpleServiceProvider extends ServiceProvider
 
     protected function getStorage($type)
     {
-        switch ($type) {
-            case 'file':
-                return new FileStorage();
-
-            case 'redis':
-                return new RedisStorage();
-
-            case 'mysql':
-                return new MySQLStorage();
-
-            default:
-                return new FileStorage();
+        $className = '\Purple\Storage\\' . ucwords($type) . 'Storage';
+        
+        if (class_exists($className)) {
+            return new $className;
+        } else {
+            throw new InvalidStorageException;
         }
     }
 }
