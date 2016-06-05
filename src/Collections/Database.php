@@ -9,7 +9,6 @@
 namespace Purple\Collections;
 
 
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,17 +18,28 @@ class Database extends AbstractCollection
 
     protected $icon = 'database';
 
-    protected $template = 'query';
+    protected $template = 'queries';
 
     public function before(Application $application)
     {
         parent::before($application);
         $event = $application['events'];
 
-        $event->listen(QueryExecuted::class, [$this, 'databaseFired']);
+        if (version_compare(Application::VERSION, '5.1.*', '<=')) {
+            $event->listen('illuminate.query', function ($query, $bindings, $time, $name) {
+                array_push($this->data[$this->template], [
+                    'query'      => $query,
+                    'bindings'   => $bindings,
+                    'time'       => $time,
+                    'connection' => $name
+                ]);
+            });
+        } else if (version_compare(Application::VERSION, '5.2.*', '=')) {
+            $event->listen(QueryExecuted::class, [$this, 'databaseFired']);
+        }
     }
 
-    public function databaseFired(QueryExecuted $query)
+    public function databaseFired(\Illuminate\Database\Events\QueryExecuted $query)
     {
         /**
          * @var $event \Illuminate\Database\Events\QueryExecuted

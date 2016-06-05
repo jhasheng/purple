@@ -15,7 +15,7 @@ interface AdapterInterface
 {
     public function store(Request $storage);
     
-    public function find($id);
+    public function retrieve($id);
     
     public function clear();
 }

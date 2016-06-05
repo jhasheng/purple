@@ -41,7 +41,7 @@ class PurpleServiceProvider extends ServiceProvider
             return new Storage($app['purple.adapter']);
         });
         $app->singleton('purple.hook', PurpleHook::class);
-        
+
         $app->singleton('purple.request', Request::class);
         /**
          * @var $purple \Purple\PurpleHook
@@ -94,9 +94,9 @@ class PurpleServiceProvider extends ServiceProvider
             __DIR__ . '/../migrations' => database_path('migrations')
         ], 'purple.sql');
 
-        $this->publishes([
-            __DIR__ . '/Resources' => resource_path('views/purple')
-        ], 'purple.view');
+//         $this->publishes([
+//             __DIR__ . '/Resources' => resource_path('views/purple')
+//         ], 'purple.view');
 
     }
 

@@ -36,12 +36,12 @@ class PurpleHook
      * @var array
      */
     protected $defaultCollections = [
-        Dashboard::class,
-        Request::class,
-        Event::class,
-        Database::class,
-        Route::class,
-        Info::class,
+         Dashboard::class,
+         Request::class,
+         Event::class,
+         Database::class,
+         Route::class,
+         Info::class,
     ];
 
     /**

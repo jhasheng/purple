@@ -22,7 +22,6 @@ class MySQL extends Model implements AdapterInterface
     public function store(Request $request)
     {
         try {
-//            DB::table('anbu')->insert($request->toArray());
             self::create($request->toArray());
         }catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -30,7 +29,7 @@ class MySQL extends Model implements AdapterInterface
 
     }
 
-    public function find($id)
+    public function retrieve($id)
     {
         return DB::table('purple')->where('uuid', $id)->first();
     }
