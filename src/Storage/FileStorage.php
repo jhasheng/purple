@@ -15,6 +15,35 @@ class FileStorage implements StorageInterface
 {
     use StorageTrait;
 
+    
+
+    protected function getFileName($token)
+    {
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $config = $this->app['config'];
+        $table = $config->get('purple.table', 'purple');
+
+        return storage_path($table) . DIRECTORY_SEPARATOR . $token . '.csv';
+    }
+
+    protected function getFileIndexName()
+    {
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $config = $this->app['config'];
+        $table = $config->get('purple.table', 'purple');
+
+        return storage_path($table) . DIRECTORY_SEPARATOR . 'index.csv';
+    }
+
+    /**
+     * 获取指定数据
+     * @param $token
+     * @return array
+     */
     public function retrieve($token)
     {
         if ($token && file_exists($file = $this->getFileName($token))) {
@@ -23,6 +52,11 @@ class FileStorage implements StorageInterface
         }
     }
 
+    /**
+     * 保存收集到的数据
+     * @param Request $request
+     * @return boolean
+     */
     public function store(Request $request)
     {
         $fileName = $this->getFileName($request->getUuid());
@@ -55,6 +89,10 @@ class FileStorage implements StorageInterface
         return true;
     }
 
+    /**
+     * 清空数据
+     * @return void
+     */
     public function purge()
     {
         /**
@@ -62,7 +100,7 @@ class FileStorage implements StorageInterface
          */
         $config = $this->app['config'];
         $table = $config->get('purple.table', 'purple');
-        
+
         $flags = \FilesystemIterator::SKIP_DOTS;
         $iterator = new \RecursiveDirectoryIterator(storage_path($table), $flags);
         $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
@@ -74,27 +112,5 @@ class FileStorage implements StorageInterface
                 rmdir($file);
             }
         }
-    }
-
-    protected function getFileName($token)
-    {
-        /**
-         * @var $config \Illuminate\Config\Repository
-         */
-        $config = $this->app['config'];
-        $table = $config->get('purple.table', 'purple');
-
-        return storage_path($table) . DIRECTORY_SEPARATOR . $token . '.csv';
-    }
-
-    protected function getFileIndexName()
-    {
-        /**
-         * @var $config \Illuminate\Config\Repository
-         */
-        $config = $this->app['config'];
-        $table = $config->get('purple.table', 'purple');
-
-        return storage_path($table) . DIRECTORY_SEPARATOR . 'index.csv';
     }
 }

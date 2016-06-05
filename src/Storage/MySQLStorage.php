@@ -22,16 +22,30 @@ class MySQLStorage extends Model implements StorageInterface
 
     protected $fillable = ['uuid', 'uri', 'content', 'time'];
 
-    public function retrieve($id)
+    /**
+     * 获取指定数据
+     * @param $token
+     * @return array
+     */
+    public function retrieve($token)
     {
-        return unserialize(DB::table('purple')->where('uuid', $id)->pluck('content'));
+        return unserialize(DB::table('purple')->where('uuid', $token)->pluck('content'));
     }
 
+    /**
+     * 保存收集到的数据
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request)
     {
         self::create($request->toArray());
     }
 
+    /**
+     * 清空数据
+     * @return void
+     */
     public function purge()
     {
         DB::table('purple')->truncate();

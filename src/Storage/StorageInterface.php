@@ -13,9 +13,23 @@ use Purple\Request\Request;
 
 interface StorageInterface
 {
-    public function retrieve($id);
+    /**
+     * 获取指定数据
+     * @param $token
+     * @return array
+     */
+    public function retrieve($token);
 
+    /**
+     * 保存收集到的数据
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request);
 
+    /**
+     * 清空数据
+     * @return void
+     */
     public function purge();
 }

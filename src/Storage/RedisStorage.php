@@ -15,7 +15,12 @@ class RedisStorage implements StorageInterface
 {
     use StorageTrait;
 
-    public function retrieve($id)
+    /**
+     * 获取指定数据
+     * @param $token
+     * @return array
+     */
+    public function retrieve($token)
     {
         /**
          * @var $config \Illuminate\Config\Repository
@@ -24,10 +29,15 @@ class RedisStorage implements StorageInterface
         $table = $config->get('purple.table', 'purple');
 
         $client = Cache::store('redis')->connection();
-        $values = unserialize($client->hget($table, $id));
+        $values = unserialize($client->hget($table, $token));
         return unserialize($values['content']);
     }
 
+    /**
+     * 保存收集到的数据
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request)
     {
         /**
@@ -40,6 +50,10 @@ class RedisStorage implements StorageInterface
         $client->hset($table, $request->getUuid(), serialize($request->toArray()));
     }
 
+    /**
+     * 清空数据
+     * @return void
+     */
     public function purge()
     {
         /**

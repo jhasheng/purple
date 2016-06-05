@@ -7,9 +7,7 @@ use Purple\Command\PurpleCommand;
 use Purple\Exceptions\InvalidStorageException;
 use Purple\PurpleHook;
 use Purple\Request\Request;
-use Purple\Storage\FileStorage;
-use Purple\Storage\MySQLStorage;
-use Purple\Storage\RedisStorage;
+
 
 class PurpleServiceProvider extends ServiceProvider
 {
@@ -22,14 +20,19 @@ class PurpleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 合并配置文件
         $this->mergeConfigFrom(__DIR__ . '/../../config/purple.php', 'purple');
 
+        // 加载渲染视图模板
         $this->loadViewsFrom(__DIR__ . '/../Resources', 'purple');
 
+        // 发布资源文件
         $this->publishAssetsFiles();
 
+        // 注册路由
         $this->registerRouter();
 
+        // 注册命令行
         $this->registerCommand();
     }
 
@@ -112,6 +115,13 @@ class PurpleServiceProvider extends ServiceProvider
 
     }
 
+    /**
+     * 获取文件存储方式
+     * 
+     * @param $type
+     * @return \Purple\Storage\StorageInterface
+     * @exception InvalidStorageException
+     */
     protected function getStorage($type)
     {
         $className = '\Purple\Storage\\' . ucwords($type) . 'Storage';

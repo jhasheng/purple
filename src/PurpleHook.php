@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 class PurpleHook
 {
 
+    /**
+     * 插件版本号
+     */
     const VERSION = '1.0.4-dev';
     /**
      * 当前应用实例
@@ -192,6 +195,10 @@ class PurpleHook
         return $uuid;
     }
 
+    /**
+     * 获取当前请求路由
+     * @return string
+     */
     protected function getCurrentRequestUri()
     {
         $current = $this->app['router']->current();
