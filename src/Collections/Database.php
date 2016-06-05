@@ -10,6 +10,7 @@ namespace Purple\Collections;
 
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class Database extends AbstractCollection
@@ -25,7 +26,7 @@ class Database extends AbstractCollection
         parent::before($application);
         $event = $application['events'];
 
-        if (version_compare(Application::VERSION, '5.1.*', '<=')) {
+        if (Str::startsWith(Application::VERSION, ['5.0', '5.1'])) {
             $event->listen('illuminate.query', function ($query, $bindings, $time, $name) {
                 array_push($this->data[$this->template], [
                     'query'      => $query,
@@ -34,7 +35,7 @@ class Database extends AbstractCollection
                     'connection' => $name
                 ]);
             });
-        } else if (version_compare(Application::VERSION, '5.2.*', '=')) {
+        } else if (Str::startsWith(Application::VERSION, ['5.2'])) {
             $event->listen(QueryExecuted::class, [$this, 'databaseFired']);
         }
     }
