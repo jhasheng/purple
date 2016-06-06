@@ -9,8 +9,8 @@
 
 namespace Purple\Controller;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
+use Illuminate\Routing\Controller;
 use Purple\Collectors\CollectionInterface;
 
 class PurpleController extends Controller

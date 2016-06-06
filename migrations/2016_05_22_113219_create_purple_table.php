@@ -14,7 +14,7 @@ class CreatePurpleTable extends Migration
     {
         Schema::create('purple', function(Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid');
+            $table->string('uuid', 50);
             $table->string('uri', 100);
             $table->text('content');
             $table->float('time');
