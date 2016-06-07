@@ -75,23 +75,24 @@ class RedisStorage implements StorageInterface
      */
     public function fetch($pageNow)
     {
-        $path = $this->app['request']->getPathInfo();
+        $path     = $this->app['request']->getPathInfo();
+        $pageSize = $this->app['config']->get('purple.history_size', 10);
         /**
          * @var $config \Illuminate\Config\Repository
          */
         $config = $this->app['config'];
-        $table = $config->get('purple.table', 'purple');
+        $table  = $config->get('purple.table', 'purple');
 
-        $client = Cache::store('redis')->connection();
+        $client  = Cache::store('redis')->connection();
         $results = $client->hgetall($table);
 
         $data = [];
         foreach ($results as $result) {
-            array_push($data, (object) unserialize($result));
+            array_push($data, (object)unserialize($result));
         }
 
-        $pageData = collect($data)->forPage($pageNow, 1)->toArray();
+        $pageData = collect($data)->forPage($pageNow, $pageSize)->toArray();
 
-        return new LengthAwarePaginator($pageData, count($data), 1, $pageNow, ['path' => $path]);
+        return new LengthAwarePaginator($pageData, count($data), $pageSize, $pageNow, ['path' => $path]);
     }
 }

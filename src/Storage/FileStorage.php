@@ -17,8 +17,6 @@ class FileStorage implements StorageInterface
 {
     use StorageTrait;
 
-    
-
     protected function getFileName($token)
     {
         /**
@@ -128,14 +126,16 @@ class FileStorage implements StorageInterface
      */
     public function fetch($pageNow)
     {
-        $path = $this->app['request']->getPathInfo();
+        $path     = $this->app['request']->getPathInfo();
+        $pageSize = $this->app['config']->get('purple.history_size', 10);
+
         $indexContent = file_get_contents($this->getFileIndexName());
 
         $indexArr = preg_split('/\s/', trim($indexContent));
-        $results = collect($indexArr)->forPage($pageNow, 1)->toArray();
-        $data = [];
+        $results  = collect($indexArr)->forPage($pageNow, $pageSize)->toArray();
+        $data     = [];
         foreach ($results as $index) {
-            array_push($data, (object) unserialize(file_get_contents($this->getFileName($index))));
+            array_push($data, (object)unserialize(file_get_contents($this->getFileName($index))));
         }
         $paginator = new LengthAwarePaginator($data, count($indexArr), 1, $pageNow, ['path' => $path]);
         return $paginator;

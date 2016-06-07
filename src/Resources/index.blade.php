@@ -19,8 +19,8 @@
     <ul>
         @foreach($menus as $item)
         <li>
-            <a href="{{ $item['url'] }}" @if(array_get($item, 'name') == $name)class="active"@endif>
-                @if(array_get($item, 'name') != $name)
+            <a href="{{ $item['url'] }}" @if(array_get($item, 'name') == $current->getName())class="active"@endif>
+                @if(array_get($item, 'name') != $current->getName())
                 <span class="label">
                     {{ array_get($item, 'name') }} <i class="arrow"></i>
                 </span>

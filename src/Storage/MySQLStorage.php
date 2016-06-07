@@ -58,6 +58,8 @@ class MysqlStorage extends Model implements StorageInterface
      */
     public function fetch($pageNow)
     {
-        return DB::table('purple')->paginate(1);
+        $pageSize = $this->app['config']->get('purple.history_size', 10);
+
+        return DB::table('purple')->paginate($pageSize);
     }
 }
