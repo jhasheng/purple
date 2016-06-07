@@ -9,6 +9,7 @@
 namespace Purple\Storage;
 
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Purple\Exceptions\InvalidTokenException;
 use Purple\Request\Request;
 
@@ -74,7 +75,9 @@ class FileStorage implements StorageInterface
             }
         }
 
-        if (false === file_put_contents($fileName, serialize($request->toArray()))) {
+        $data = $request->toArray();
+        $data['created_at'] = date('Y-m-d H:i:s');
+        if (false === file_put_contents($fileName, serialize($data))) {
             return false;
         }
 
@@ -116,5 +119,25 @@ class FileStorage implements StorageInterface
                 rmdir($file);
             }
         }
+    }
+
+    /**
+     * 获取所有数据，可分页
+     * @param $pageNow
+     * @return array
+     */
+    public function fetch($pageNow)
+    {
+        $path = $this->app['request']->getPathInfo();
+        $indexContent = file_get_contents($this->getFileIndexName());
+
+        $indexArr = preg_split('/\s/', trim($indexContent));
+        $results = collect($indexArr)->forPage($pageNow, 1)->toArray();
+        $data = [];
+        foreach ($results as $index) {
+            array_push($data, (object) unserialize(file_get_contents($this->getFileName($index))));
+        }
+        $paginator = new LengthAwarePaginator($data, count($indexArr), 1, $pageNow, ['path' => $path]);
+        return $paginator;
     }
 }

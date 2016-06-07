@@ -32,4 +32,11 @@ interface StorageInterface
      * @return void
      */
     public function purge();
+
+    /**
+     * 获取所有数据，可分页
+     * @param $pageNow
+     * @return array
+     */
+    public function fetch($pageNow);
 }

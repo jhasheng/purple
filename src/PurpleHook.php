@@ -7,6 +7,7 @@ use Purple\Collectors\CollectionInterface;
 use Purple\Collectors\Dashboard;
 use Purple\Collectors\Database;
 use Purple\Collectors\Event;
+use Purple\Collectors\Historay;
 use Purple\Collectors\Info;
 use Purple\Collectors\Request;
 use Purple\Collectors\Route;
@@ -41,12 +42,13 @@ class PurpleHook
      * @var array
      */
     protected $defaultCollections = [
-         Dashboard::class,
-         Request::class,
-         Event::class,
-         Database::class,
-         Route::class,
-         Info::class,
+        Dashboard::class,
+        Request::class,
+        Event::class,
+        Database::class,
+        Route::class,
+        Info::class,
+        Historay::class,
     ];
 
     /**

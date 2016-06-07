@@ -9,6 +9,7 @@
 namespace Purple\Storage;
 
 use Cache;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Purple\Request\Request;
 
 class RedisStorage implements StorageInterface
@@ -47,7 +48,9 @@ class RedisStorage implements StorageInterface
         $table = $config->get('purple.table', 'purple');
 
         $client = Cache::store('redis')->connection();
-        $client->hset($table, $request->getUuid(), serialize($request->toArray()));
+        $data = $request->toArray();
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $client->hset($table, $request->getUuid(), serialize($data));
     }
 
     /**
@@ -63,5 +66,32 @@ class RedisStorage implements StorageInterface
         $table = $config->get('purple.table', 'purple');
 
         Cache::store('redis')->connection()->del($table);
+    }
+
+    /**
+     * 获取所有数据，可分页
+     * @param $pageNow
+     * @return array
+     */
+    public function fetch($pageNow)
+    {
+        $path = $this->app['request']->getPathInfo();
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $config = $this->app['config'];
+        $table = $config->get('purple.table', 'purple');
+
+        $client = Cache::store('redis')->connection();
+        $results = $client->hgetall($table);
+
+        $data = [];
+        foreach ($results as $result) {
+            array_push($data, (object) unserialize($result));
+        }
+
+        $pageData = collect($data)->forPage($pageNow, 1)->toArray();
+
+        return new LengthAwarePaginator($pageData, count($data), 1, $pageNow, ['path' => $path]);
     }
 }

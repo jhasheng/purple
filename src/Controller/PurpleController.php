@@ -22,7 +22,7 @@ class PurpleController extends Controller
         $this->app = $application;
     }
 
-    public function index($id, $name = 'request')
+    public function index($id, $name = 'dashboard')
     {
         $app = $this->app;
         /**

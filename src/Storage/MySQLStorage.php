@@ -50,4 +50,14 @@ class MysqlStorage extends Model implements StorageInterface
     {
         DB::table('purple')->truncate();
     }
+
+    /**
+     * 获取所有数据，可分页
+     * @param $pageNow
+     * @return array
+     */
+    public function fetch($pageNow)
+    {
+        return DB::table('purple')->paginate(1);
+    }
 }

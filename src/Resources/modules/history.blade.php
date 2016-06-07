@@ -2,6 +2,7 @@
 <h2>Latest Request</h2>
 <a href="{{ url('/anbu') }}" class="latest-request"><i class="fa fa-reply"></i>&nbsp;&nbsp; View Latest Request</a>
 <h2>Request History</h2>
+
 @if (isset($history) && count($history))
     <p>Click on a title to replay a request and view debug information.</p>
     <table class="anbu-table">
@@ -15,12 +16,11 @@
         <tbody>
         @foreach($history as $storage)
             <tr>
-                <?php $storage = $storage->toArray(); ?>
-                <?php $date = new Carbon\Carbon($storage['created_at']); ?>
-                <td><a href="{{ url('/anbu') .'/'. $storage['id'] }}">{{ $date->format('l jS F g:i:s A') }}</a><span
+                <?php $date = new Carbon\Carbon($storage->created_at); ?>
+                <td><a href="{{ route('purple.index', ['id' => $storage->uuid]) }}">{{ $date->format('l jS F g:i:s A') }}</a><span
                             class="friendly-time">({{ $date->diffForHumans() }})</span></td>
-                <td>{{ number_format($storage['time'], 3) }}ms</td>
-                <td class="code">{{ $storage['uri'] }}</td>
+                <td>{{ number_format($storage->time, 3) }}ms</td>
+                <td class="code">{{ $storage->uri }}</td>
             </tr>
         @endforeach
 

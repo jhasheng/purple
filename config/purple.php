@@ -15,5 +15,5 @@ return [
     'table'   => 'purple',
 
     // 存储方式
-    'storage' => 'mysql'
+    'storage' => 'file'
 ];
