@@ -14,7 +14,7 @@ use Purple\Request\Request;
 use Illuminate\Database\Eloquent\Model;
 
 
-class MySQLStorage extends Model implements StorageInterface
+class MysqlStorage extends Model implements StorageInterface
 {
     use StorageTrait;
 
@@ -29,7 +29,7 @@ class MySQLStorage extends Model implements StorageInterface
      */
     public function retrieve($token)
     {
-        return unserialize(DB::table('purple')->where('uuid', $token)->pluck('content'));
+        return unserialize(DB::table('purple')->where('uuid', $token)->value('content'));
     }
 
     /**
