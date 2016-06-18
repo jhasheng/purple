@@ -8,7 +8,6 @@ use Purple\Exceptions\InvalidStorageException;
 use Purple\PurpleHook;
 use Purple\Request\Request;
 
-
 class PurpleServiceProvider extends ServiceProvider
 {
     protected $defer = false;
@@ -21,17 +20,13 @@ class PurpleServiceProvider extends ServiceProvider
     public function boot()
     {
         // 合并配置文件
-        $this->mergeConfigFrom(__DIR__ . '/../../config/purple.php', 'purple');
-
+        $this->mergeConfigFrom(__DIR__ . '/../Config/purple.php', 'purple');
         // 加载渲染视图模板
-        $this->loadViewsFrom(__DIR__ . '/../Resources', 'purple');
-
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'purple');
         // 发布资源文件
         $this->publishAssetsFiles();
-
         // 注册路由
         $this->registerRouter();
-
         // 注册命令行
         $this->registerCommand();
     }
@@ -45,9 +40,12 @@ class PurpleServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-        $config = $app['config'];
         /**
          * @var $config \Illuminate\Config\Repository
+         */
+        $config = $app['config'];
+        /**
+         * @var $storage \Purple\Storage\StorageInterface
          */
         $storage = $config->get('purple.storage', 'file');
 
@@ -120,7 +118,7 @@ class PurpleServiceProvider extends ServiceProvider
      * 
      * @param $type
      * @return \Purple\Storage\StorageInterface
-     * @exception InvalidStorageException
+     * @throws InvalidStorageException
      */
     protected function getStorage($type)
     {

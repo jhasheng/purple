@@ -9,12 +9,22 @@
  */
 namespace Purple\Storage;
 
+use Illuminate\Foundation\Application;
 use Purple\Request\Request;
 
 interface StorageInterface
 {
     /**
+     * 存储当前运行实例
+     * 
+     * @param Application $application
+     * @return void
+     */
+    public function setApplication(Application $application);
+    
+    /**
      * 获取指定数据
+     * 
      * @param $token
      * @return array
      */
@@ -22,6 +32,7 @@ interface StorageInterface
 
     /**
      * 保存收集到的数据
+     * 
      * @param Request $request
      * @return void
      */
@@ -29,12 +40,14 @@ interface StorageInterface
 
     /**
      * 清空数据
+     * 
      * @return void
      */
     public function purge();
 
     /**
      * 获取所有数据，可分页
+     * 
      * @param $pageNow
      * @return array
      */

@@ -66,6 +66,9 @@ class PurpleController extends Controller
         $hook = $this->app['purple.hook'];
         $collections = $hook->getCollections();
 
+        /**
+         * @var $collection \Purple\Collectors\CollectionInterface
+         */
         foreach ($collections as $collection) {
             $global = array_merge($collection->getGlobal(), $global);
             array_push($menu, $collection->getMenu());

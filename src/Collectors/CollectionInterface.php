@@ -30,4 +30,8 @@ interface CollectionInterface
     public function formatData();
     
     public function getTemplate();
+    
+    public function getGlobal();
+    
+    public function getMenu();
 }

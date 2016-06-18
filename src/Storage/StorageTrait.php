@@ -8,7 +8,6 @@
 
 namespace Purple\Storage;
 
-
 use Illuminate\Foundation\Application;
 
 trait StorageTrait

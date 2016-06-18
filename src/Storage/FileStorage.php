@@ -17,28 +17,6 @@ class FileStorage implements StorageInterface
 {
     use StorageTrait;
 
-    protected function getFileName($token)
-    {
-        /**
-         * @var $config \Illuminate\Config\Repository
-         */
-        $config = $this->app['config'];
-        $table = $config->get('purple.table', 'purple');
-
-        return storage_path($table) . DIRECTORY_SEPARATOR . $token . '.csv';
-    }
-
-    protected function getFileIndexName()
-    {
-        /**
-         * @var $config \Illuminate\Config\Repository
-         */
-        $config = $this->app['config'];
-        $table = $config->get('purple.table', 'purple');
-
-        return storage_path($table) . DIRECTORY_SEPARATOR . 'index.csv';
-    }
-
     /**
      * 获取指定数据
      * @param $token
@@ -122,7 +100,7 @@ class FileStorage implements StorageInterface
     /**
      * 获取所有数据，可分页
      * @param $pageNow
-     * @return array
+     * @return array|LengthAwarePaginator
      */
     public function fetch($pageNow)
     {
@@ -137,7 +115,28 @@ class FileStorage implements StorageInterface
         foreach ($results as $index) {
             array_push($data, (object)unserialize(file_get_contents($this->getFileName($index))));
         }
-        $paginator = new LengthAwarePaginator($data, count($indexArr), 1, $pageNow, ['path' => $path]);
-        return $paginator;
+        return new LengthAwarePaginator($data, count($indexArr), 1, $pageNow, ['path' => $path]);
+    }
+
+    protected function getFileName($token)
+    {
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $config = $this->app['config'];
+        $table = $config->get('purple.table', 'purple');
+
+        return storage_path($table) . DIRECTORY_SEPARATOR . $token . '.csv';
+    }
+
+    protected function getFileIndexName()
+    {
+        /**
+         * @var $config \Illuminate\Config\Repository
+         */
+        $config = $this->app['config'];
+        $table = $config->get('purple.table', 'purple');
+
+        return storage_path($table) . DIRECTORY_SEPARATOR . 'index.csv';
     }
 }
