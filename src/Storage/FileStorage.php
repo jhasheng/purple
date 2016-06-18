@@ -104,6 +104,8 @@ class FileStorage implements StorageInterface
      */
     public function fetch($pageNow)
     {
+        $data = [];
+
         $path     = $this->app['request']->getPathInfo();
         $pageSize = $this->app['config']->get('purple.history_size', 10);
 
@@ -111,11 +113,10 @@ class FileStorage implements StorageInterface
 
         $indexArr = preg_split('/\s/', trim($indexContent));
         $results  = collect($indexArr)->forPage($pageNow, $pageSize)->toArray();
-        $data     = [];
         foreach ($results as $index) {
             array_push($data, (object)unserialize(file_get_contents($this->getFileName($index))));
         }
-        return new LengthAwarePaginator($data, count($indexArr), 1, $pageNow, ['path' => $path]);
+        return new LengthAwarePaginator($data, count($indexArr), $pageSize, $pageNow, ['path' => $path]);
     }
 
     protected function getFileName($token)

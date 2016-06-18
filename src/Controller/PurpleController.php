@@ -58,8 +58,7 @@ class PurpleController extends Controller
 
     protected function getGlobalData()
     {
-        $global = [];
-        $menu = [];
+        $global = $menu = [];
         /**
          * @var $hook \Purple\PurpleHook
          */
