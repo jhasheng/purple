@@ -100,15 +100,15 @@ class PurpleServiceProvider extends ServiceProvider
     protected function publishAssetsFiles()
     {
         $this->publishes([
-            __DIR__ . '/../../config/purple.php' => config_path('purple.php')
+            __DIR__ . '/../Config/purple.php' => config_path('purple.php')
         ], 'purple.config');
 
         $this->publishes([
-            __DIR__ . '/../../assets' => public_path('purple')
+            __DIR__ . '/../Resources/assets' => public_path('purple')
         ], 'purple.assets');
 
         $this->publishes([
-            __DIR__ . '/../../migrations' => database_path('migrations')
+            __DIR__ . '/../Database' => database_path('migrations')
         ], 'purple.sql');
 
     }
