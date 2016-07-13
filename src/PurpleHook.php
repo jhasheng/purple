@@ -11,6 +11,7 @@ use Purple\Collectors\Historay;
 use Purple\Collectors\Info;
 use Purple\Collectors\Request;
 use Purple\Collectors\Route;
+use Purple\Collectors\View;
 use Purple\Exceptions\InvalidCollectorException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -45,6 +46,7 @@ class PurpleHook
         Dashboard::class,
         Request::class,
         Event::class,
+//        View::class,
         Database::class,
         Route::class,
         Info::class,

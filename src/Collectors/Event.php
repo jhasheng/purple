@@ -30,7 +30,7 @@ class Event extends AbstractCollection
         $event->listen('*', [$this, 'eventFired']);
     }
 
-    public function eventFired()
+    public function eventFired($args)
     {
         /**
          * @var $event \Illuminate\Events\Dispatcher
@@ -38,8 +38,9 @@ class Event extends AbstractCollection
         $event = $this->app['events'];
 
         array_push($this->data[$this->template], [
-            'name' => $event->firing(),
-            'time' => microtime(true) - LARAVEL_START
+            'name'  => $event->firing(),
+            'class' => get_class($args),
+            'time'  => microtime(true) - LARAVEL_START
         ]);
     }
 

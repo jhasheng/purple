@@ -7,6 +7,7 @@
     <thead>
         <tr>
             <th>Type</th>
+            <th>Class</th>
             <th>Fired</th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
         @foreach($events as $event)
         <tr>
             <td class="code">{{ $event['name'] }}</td>
+            <td class="code">{{ $event['class'] }}</td>
             <td>{{ number_format($event['time'], 3) }}ms</td>
         </tr>
         @endforeach

@@ -26,7 +26,7 @@
                 @foreach($request['data'] as $key => $value)
                     <tr>
                         <td>{{ $key }}</td>
-                        <td>{{ str_limit($value) }}</td>
+                        <td>{{ is_array($value) ? json_encode($value) : $value }}</td>
                     </tr>
                 @endforeach
                 </tbody>
