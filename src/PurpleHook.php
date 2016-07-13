@@ -21,7 +21,7 @@ class PurpleHook
     /**
      * 插件版本号
      */
-    const VERSION = '1.0.5';
+    const VERSION = '1.0.6';
     /**
      * 当前应用实例
      * @var Application
