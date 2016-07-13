@@ -1,6 +1,6 @@
 # 基于 laravel 5 的性能分析器
 
-![image](https://github.com/jhasehng/purple/raw/master/screenShots/purple.jpg)
+![image](https://github.com/jhasheng/purple/raw/master/screenshots/purple.jpg)
 
 ## 由来
 
