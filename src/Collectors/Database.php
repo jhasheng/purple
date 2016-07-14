@@ -9,6 +9,7 @@
 namespace Purple\Collectors;
 
 
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,10 +41,16 @@ class Database extends AbstractCollection
         }
     }
 
-    public function databaseFired(\Illuminate\Database\Events\QueryExecuted $query)
+    public function databaseFired(QueryExecuted $query)
     {
+        $query->sql = preg_replace_callback('/\?/', function($matches) use($query) {
+            foreach ($matches as $k => $match) {
+                return $query->bindings[$k];
+            }
+        }, $query->sql);
+
         /**
-         * @var $event \Illuminate\Database\Events\QueryExecuted
+         * @var $event QueryExecuted
          */
         array_push($this->data[$this->template], [
             'query'      => $query->sql,

@@ -3,7 +3,7 @@
 <table class="anbu-table">
     <thead>
         <tr>
-            <th>Query</th>
+            <th width="80%">Query</th>
             <th>Execution Time</th>
         </tr>
     </thead>

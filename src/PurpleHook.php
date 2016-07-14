@@ -13,6 +13,7 @@ use Purple\Collectors\Request;
 use Purple\Collectors\Route;
 use Purple\Collectors\View;
 use Purple\Exceptions\InvalidCollectorException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class PurpleHook
@@ -120,7 +121,7 @@ class PurpleHook
 
         $uuid = $this->endHook();
 
-        if (!$this->isAjax()) {
+        if (!$this->isAjax() && !$response instanceof JsonResponse) {
             $content = $response->getContent();
 
             $button = view('purple::button', compact('uuid'))->render();
@@ -168,6 +169,11 @@ class PurpleHook
     protected function isAjax()
     {
         return $this->app['request']->isXmlHttpRequest();
+    }
+
+    protected function wantsJson()
+    {
+        return $this->app['request']->wantsJson();
     }
 
     /**

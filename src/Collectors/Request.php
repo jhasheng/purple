@@ -45,7 +45,7 @@ class Request extends AbstractCollection
             'time'    => microtime(true) - LARAVEL_START,
             'version' => Application::VERSION
         ];
-
-        $this->calcBadge();
+        
+        $this->setBadge(1);
     }
 }
